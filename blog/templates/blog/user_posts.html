@@ -1,0 +1,14 @@
+{% extends "registration/base.html" %} {% block body %}
+<h1 class="mb-3">Posts by {{ view.kwargs.username }} </h1>
+{% for post in posts %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+        </div>
+        <h2><a class="article-title" href="{% url 'Post_View' post.id %}">{{ post.title }}</a></h2>
+        <p class="article-content">{{ post.content }}</p>
+    </div>
+</article>
+{% endfor %} {% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'registration/base.html'%} {% block body%}
+<h1>Hello</h1>
+<form id="searchform" action="{% url 'search' %}" method="get">
+    <input type="text" name="q" type="text" value="{{ request.GET.q }}" placeholder="Search Posts Here..." />
+    <button type="button" onclick="searchform.submit()" class=" text-white my-color btn-primary">Search<i class="fa fa-search"></i></button>
+</form>
+{% for posts in post %}
+<a href={% url 'Post_View' posts.pk %}>
+    <h1>{{ posts.title }}</h1>
+</a>
+<h1>{{ posts.date_posted }}</h1>
+<a href="{% url 'user-posts' posts.author.username %}">
+    <h1>{{ posts.author }}</h1>
+    {% if posts.file %}
+    <div class="form-group mt-0 pt-0  m-2">
+        <a class="btn btn-outline-primary  btn-d " href="{{ posts.file.url }}" download type="submit">Download<i class="fas fa-download"></i></a>
+    </div>
+    {% endif %}
+</a>
+<p>{{message}}</p>
+{% endfor %} {% endblock %}

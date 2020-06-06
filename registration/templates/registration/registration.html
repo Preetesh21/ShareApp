@@ -1,0 +1,17 @@
+{% extends 'registration/base.html'%} {% load crispy_forms_tags %} {% block body%}
+
+<center>
+    <h1>Register Here</h1>
+</center>
+<form method="POST" action="" class='form-group'>
+    {% csrf_token%} {{form|crispy}}
+
+    <p>Already Have an Account.<a href={% url 'login' %}>Log in.</a></p>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+<script>
+    document.getElementsByTagName('input').size = '20';
+</script>
+{% endblock %}
