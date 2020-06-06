@@ -132,3 +132,10 @@ LOGIN_URL='login'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'shareme2110@gmail.com'
+EMAIL_HOST_PASSWORD = 'Gmail@123'
+EMAIL_PORT = 587
