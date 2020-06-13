@@ -1,6 +1,6 @@
-{% extends 'registration/base.html'%} {% block body%}
-<h1>Hello</h1>
-
+{% extends 'blog/base.html'%} {% block body%}
+<h1>Post</h1>
+<!-- 
 <h1>{{ object.title }}</h1>
 <h1>{{ object.date_posted }}</h1>
 {% if object.author == user %}
@@ -17,5 +17,37 @@
     </div>
     {% endif %}
 </a>
-<p>{{message}}</p>
+<p>{{message}}</p> -->
+
+
+<div class="card text-center" style=" width:100%;">
+    <div class="card-header" style="background-color: #0cbaba;
+                background-image: linear-gradient(315deg, #0cbaba 0%, #380036 74%);
+                ">
+        <h1>{{ object.title }}</h1>
+    </div>
+    {% if object.author == user %}
+    <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+    </div>
+    {% endif %}
+    <div class="card-body">
+        <p class="card-text">
+            <a href={% url 'user-posts' object.author.username %}>
+                <h1>{{ object.author }}</h1>
+
+            </a>
+            {% if object.author != user and object.file %}
+            <div class="form-group mt-0 pt-0 ">
+                <a href="{{ object.file.url }}" download class="btn btn-primary flex-last" type="submit"><i class="fas fa-download"></i> Downlaod</a>
+            </div>
+            {% endif %}
+    </div>
+    <div class="card-footer text-muted" style="background-color: #0cbaba;
+                background-image: linear-gradient(315deg, #0cbaba 0%, #380036 74%);">
+        <p>{{ object.date_posted }}</p>
+    </div>
+</div>
+
 {% endblock %}

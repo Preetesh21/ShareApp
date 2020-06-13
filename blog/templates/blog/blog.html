@@ -1,21 +1,35 @@
-{% extends 'registration/base.html'%} {% block body%}
-<h1>Hello</h1>
+{%extends "blog/base.html" %}{% load static %} {% block body %}
+<h1>BLOG</h1>
 <form id="searchform" action="{% url 'search' %}" method="get">
     <input type="text" name="q" type="text" value="{{ request.GET.q }}" placeholder="Search Posts Here..." />
     <button type="button" onclick="searchform.submit()" class=" text-white my-color btn-primary">Search<i class="fa fa-search"></i></button>
 </form>
+<h1>{{messages}}</h1>
 {% for posts in post %}
-<a href={% url 'Post_View' posts.pk %}>
-    <h1>{{ posts.title }}</h1>
-</a>
-<h1>{{ posts.date_posted }}</h1>
-<a href="{% url 'user-posts' posts.author.username %}">
-    <h1>{{ posts.author }}</h1>
-    {% if posts.file %}
-    <div class="form-group mt-0 pt-0  m-2">
-        <a class="btn btn-outline-primary  btn-d " href="{{ posts.file.url }}" download type="submit">Download<i class="fas fa-download"></i></a>
+<div class="card text-center" style=" width:80%;">
+    <div class="card-header" style="background-color: #0cbaba;
+                background-image: linear-gradient(315deg, #0cbaba 0%, #380036 74%);
+                ">
+        <a href={% url 'Post_View' posts.pk %}>
+            <h1>{{ posts.title }}</h1>
+        </a>
     </div>
-    {% endif %}
-</a>
-<p>{{message}}</p>
-{% endfor %} {% endblock %}
+    <div class="card-body">
+        <p class="card-text">
+            <p>{{message}} BY</p>
+            <a href="{% url 'user-posts' posts.author.username %}">
+                <h3>{{ posts.author }}</h3>
+
+            </a>
+            {% if posts.file %}
+            <div class="form-group mt-0 pt-0  m-2">
+                <a class="btn btn-outline-primary  btn-d " href="{{ posts.file.url }}" download type="submit">Download<i class="fas fa-download"></i></a>
+            </div>
+            {% endif %}
+    </div>
+    <div class="card-footer text-muted" style="background-color: #0cbaba;
+                background-image: linear-gradient(315deg, #0cbaba 0%, #380036 74%);">
+        <p>{{ posts.date_posted }}</p>
+    </div>
+</div>
+<br> {% endfor %} {% endblock %}

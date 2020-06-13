@@ -1,7 +1,7 @@
-{% extends "registration/base.html" %} {% block body %}
+{% extends "blog/base.html" %} {% block body %}
 <h1 class="mb-3">Posts by {{ view.kwargs.username }} </h1>
 {% for post in posts %}
-<article class="media content-section">
+<!-- <article class="media content-section">
     <div class="media-body">
         <div class="article-metadata">
             <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
@@ -10,5 +10,30 @@
         <h2><a class="article-title" href="{% url 'Post_View' post.id %}">{{ post.title }}</a></h2>
         <p class="article-content">{{ post.content }}</p>
     </div>
-</article>
-{% endfor %} {% endblock %}
+</article> -->
+
+<div class="card text-center" style=" width:100%;">
+    <div class="card-header" style="background-color: #0cbaba;
+                background-image: linear-gradient(315deg, #0cbaba 0%, #380036 74%);
+                ">
+        <h1><a class="article-title" href="{% url 'Post_View' post.id %}" style="color: #e4c439;">{{ post.title }}</a></h1>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            <!-- <a href="{% url 'user-posts' post.author.username %}"> -->
+            <p class="article-content">{{ post.content }}</p>
+            <!-- <h3>{{ post.author }}</h3> -->
+
+            </a>
+            {% if post.file %}
+            <div class="form-group mt-0 pt-0  m-2">
+                <a class="btn btn-outline-primary  btn-d " href="{{ post.file.url }}" download type="submit">Download<i class="fas fa-download"></i></a>
+            </div>
+            {% endif %}
+    </div>
+    <div class="card-footer text-muted" style="background-color: #0cbaba;
+                background-image: linear-gradient(315deg, #0cbaba 0%, #380036 74%);">
+        <p>{{ post.date_posted }}</p>
+    </div>
+</div>
+<br> {% endfor %} {% endblock %}

@@ -15,11 +15,12 @@ def blog(request):
     if(request.user.username!=''):
         print(request.user.username)
         #print(request.user.email)
-        message='welcome lorem lorejnfnn njhdk nndckjdcn cndndk ncndkc njcdcn njcdicjdcnkdjcokdcn kcjdnckdnckdkcn dc cndcjndkckdn c'
+        message='new post'
         post=Post.objects.get_queryset().order_by('-date_posted')
         content={
             'message':message,
             'post':post,
+            'messages':'',
             
         }
         return render(request,'blog/blog.html',content)
@@ -33,12 +34,20 @@ def search(request):
 
         result=Post.objects.filter(Q(title__icontains=query) | Q(author__username__icontains=query) | Q(content__icontains=query))
         #paginate_by=2
-        ids=result[0].id
-        context={ 'posts':ids }
-        print(context)
         print(result)
-        return redirect('Post_View', result[0].id)
+        if(result):
+            ids=result[0].id
+            context={ 'posts':ids }
+            print(context)
+            print(result)
+            return redirect('Post_View', result[0].id)
         #return render(request,template,ids)
+        print('N')
+        content={
+            'messages':'No such result found',
+            
+        }
+        return render(request,'blog/blog.html',content)
     
  
     
