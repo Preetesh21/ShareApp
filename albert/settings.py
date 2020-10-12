@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'django.contrib.staticfiles',
     'registration.apps.RegistrationConfig',
-    
+    'ckeditor'
     
 ]
 

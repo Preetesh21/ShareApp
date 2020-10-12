@@ -38,7 +38,9 @@
                 <h1>{{ object.author }}</h1>
 
             </a>
-            {% if object.author != user and object.file %}
+            {%if object.content %}
+            <p>{{object.content | safe}}</p>
+            {% endif %} {% if object.author != user and object.file %}
             <div class="form-group mt-0 pt-0 ">
                 <a href="{{ object.file.url }}" download class="btn btn-primary flex-last" type="submit"><i class="fas fa-download"></i> Downlaod</a>
             </div>
