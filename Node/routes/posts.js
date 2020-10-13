@@ -19,6 +19,22 @@ router.post('/', ensureAuthenticated, async(req, res) => {
     }
 })
 
+// Get a specific Post
+router.get("/:id", async(req, res) => {
+    try {
+        console.log(req.params.id)
+        const stories = await Posts.findById(req.params.id).populate('user').lean()
+        console.log(stories.title)
+        res.render('single', {
+            name: req.user.name,
+            stories,
+        })
+    } catch (err) {
+        console.log(err)
+        res.send('error');
+    }
+
+});
 
 
 module.exports = router;
