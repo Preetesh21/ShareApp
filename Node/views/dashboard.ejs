@@ -2,4 +2,13 @@
 <p class="lead mb-3">Welcome
     <%= user.name %>
 </p>
-<a href="/users/logout" class="btn btn-secondary">Logout</a>
+<% if(Story){ %>
+    <% Story.forEach((story)=>{ %>
+        <p>
+            <%=story.title%>
+        </p>
+        <% }); %>
+            <%}else { %>
+                <p>No stories to show</p>
+                <%}%>
+                    <a href="/users/logout" class="btn btn-secondary">Logout</a>

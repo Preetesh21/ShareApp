@@ -3,6 +3,7 @@ const ejs = require("express-ejs-layouts");
 const mongoose = require('mongoose');
 const session = require("express-session")
 const flash = require('connect-flash');
+const MongoStore = require('connect-mongo')(session)
 const app = new express();
 const passport = require('passport')
 
@@ -27,7 +28,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(session({
     secret: 'secret',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
 }))
 
 // Passport initialize
