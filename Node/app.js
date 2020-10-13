@@ -23,6 +23,7 @@ app.set('view engine', 'ejs');
 
 // Body Parser
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // Sessions Middleware
 app.use(session({
@@ -50,6 +51,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
+app.use('/posts', require('./routes/posts'));
 
 const PORT = process.env.PORT || 5000;
 

@@ -1,14 +1,19 @@
 <h1 class="mt-4">Dashboard</h1>
 <p class="lead mb-3">Welcome
-    <%= user.name %>
+    <%= name %>
 </p>
-<% if(Story){ %>
-    <% Story.forEach((story)=>{ %>
+<% if(stories){ %>
+    <% for(var i=0; i < stories.length; i++) { %>
         <p>
-            <%=story.title%>
+            <%=stories[i].title%>
         </p>
-        <% }); %>
-            <%}else { %>
-                <p>No stories to show</p>
-                <%}%>
-                    <a href="/users/logout" class="btn btn-secondary">Logout</a>
+        <%=stories[i].body%>
+            <p> by
+                <%=stories[i].user.name %>
+            </p>
+            <% } %>
+                <%}else { %>
+                    <p>No stories to show</p>
+                    <%}%>
+                        <a href="/posts/add" class="btn btn-primary">Add</a>
+                        <a href="/users/logout" class="btn btn-secondary">Logout</a>

@@ -12,7 +12,7 @@ const Postscheme = new moongoose.Schema({
     },
     user: {
         type: moongoose.Schema.Types.ObjectId,
-        ref: 'Users'
+        ref: 'User'
     },
     date: {
         type: Date,

@@ -1,0 +1,25 @@
+<h3>Add Story</h3>
+<br>
+<div class="row">
+    <form action="/posts" method="POST" class="col-m-4">
+        <div class="row">
+            <div class="input-field">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title">
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field">
+                <h5>Tell Us Your Story:</h5>
+                <textarea id="body" name="body"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <input type="submit" value="Save" class="btn btn-success mr-2">
+            <a href="/dashboard" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
