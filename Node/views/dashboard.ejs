@@ -1,6 +1,7 @@
 <h1 class="mt-4">Dashboard</h1>
 <p class="lead mb-3">Welcome
     <%= name %>
+        <%= typeof msg!= 'undefined'? msg :'' %>
 </p>
 <% if(stories){ %>
     <% for(var i=0; i < stories.length; i++) { %>

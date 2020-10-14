@@ -12,5 +12,8 @@
     <a href="/posts/user/<%=stories.user._id%>">
         <%=stories.user.name%>
     </a>
+    <%if(stories.path){%>
+        <a href="/posts/download/<%=stories._id%>">Download</a>
+        <%}%>
 </p>
 <a href="/dashboard" class="btn btn-secondary">Dashboard</a>

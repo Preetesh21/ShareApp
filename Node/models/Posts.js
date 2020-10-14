@@ -6,6 +6,7 @@ const Postscheme = new moongoose.Schema({
         required: true,
         trim: true
     },
+    path: { type: String },
     body: {
         type: String,
         required: true

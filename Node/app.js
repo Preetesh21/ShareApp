@@ -14,6 +14,7 @@ const db = require('./config/keys').mongouri;
 // override with POST having ?_method=PUT
 app.use(methodOverride('_method'))
 
+app.use(express.static('./public'));
 
 // Method override
 app.use(
@@ -64,6 +65,7 @@ app.use((req, res, next) => {
     res.locals.error = req.flash("error");
     next();
 });
+
 
 // Routes
 app.use('/', require('./routes/index'));

@@ -1,23 +1,96 @@
 const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
-
+const multer = require('multer');
 const Posts = require('../models/Posts')
+const path = require('path')
+
+
+// Storage Engine
+const storage = multer.diskStorage({
+    destination: './public/files',
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+// Init Upload
+let upload = multer({
+    storage: storage,
+    fileFilter: async function(req, file, cb) {
+        checkFileType(file, cb);
+    }
+}).single('upload-file');
+
+// Check File Type
+async function checkFileType(file, cb) {
+    // Allowed ext
+    const filetypes = /jpeg|jpg|pdf|png|gif/;
+    // Check ext
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    // Check mime
+    const mimetype = filetypes.test(file.mimetype);
+
+    if (mimetype && extname) {
+        return cb(null, true);
+    } else {
+        cb('Error: Images Only!');
+    }
+}
+
+// Download a Post
+router.get('/download/:id', async(req, res) => {
+    try {
+        console.log(req.params.id)
+        const story = await Posts.findById(req.params.id)
+        if (!story) {
+            res.render('dashboard');
+        } else {
+            story.path = '../public' + story.path;
+            var filePath = path.join(__dirname, story.path); // Or format the path using the `id` rest param
+            console.log(filePath)
+            res.download(filePath);
+        }
+    } catch (err) {
+        console.log(err);
+        res.send("error")
+    }
+});
+
 
 // Add Get
 router.get("/add", (req, res) => res.render('add'));
 
 // POST 
 router.post('/', ensureAuthenticated, async(req, res) => {
-    try {
-        req.body.user = req.user.id
-        await Posts.create(req.body)
-        res.redirect('/dashboard')
-    } catch (err) {
-        console.error(err)
-        res.render('error')
-    }
-})
+    upload(req, res, (err) => {
+        if (err) {
+            console.log(err);
+            res.render('dashboard', {
+                msg: err
+            });
+        } else {
+            //console.log(`/files/${req.file.filename}`)
+            try {
+                req.body.user = req.user.id
+                if (req.file) {
+                    req.body.path = `/files/${req.file.filename}`
+                }
+                var post = new Posts(req.body);
+                post.save(function(error) {
+                    if (error) {
+                        throw error;
+                    }
+                    // await Posts.create(req.body)
+                    res.redirect('/dashboard')
+                });
+            } catch (err) {
+                console.error(err)
+                res.send('error')
+            }
+        }
+    });
+});
 
 // Get a specific Post
 router.get("/:id", async(req, res) => {
