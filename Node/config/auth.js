@@ -8,6 +8,7 @@ module.exports = {
     },
     forwardAuthenticated: function(req, res, next) {
         if (!req.isAuthenticated()) {
+            console.log('heya')
             return next();
         }
         res.redirect('/dashboard');

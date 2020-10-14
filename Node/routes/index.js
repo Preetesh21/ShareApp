@@ -14,6 +14,7 @@ router.get('/dashboard', ensureAuthenticated, async(req, res) => {
         const stories = await Posts.find().populate('user').lean()
         res.render('dashboard', {
             name: req.user.name,
+            id: req.user._id,
             stories,
         })
     } catch (err) {

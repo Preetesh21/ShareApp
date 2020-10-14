@@ -1,0 +1,16 @@
+<h1> Single user</h1>
+
+<p>
+    <%=name %>
+</p>
+
+<%stories.forEach((story)=>{%>
+    <p>
+        <%=story.title%>
+    </p><a href="/posts/<%=story._id%>" class="btn btn-info mb-2">Read More</a>
+    <form action="/posts/<%=story._id%>?_method=DELETE" method="POST" class="col-m-10">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" value="Delete" class="btn btn-danger mr-2">
+    </form>
+    <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
+    <%});%>

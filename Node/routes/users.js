@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport')
 const User = require('../models/Users');
 const bcrypt = require('bcrypt');
+const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
 router.get("/login", (req, res) => res.render('login'));
 
@@ -80,12 +81,24 @@ router.post('/login', (req, res, next) => {
 });
 
 // Logout
-router.get('/logout', (req, res) => {
+router.get('/logout', ensureAuthenticated, (req, res) => {
     req.logout();
     req.flash('success_msg', 'You are logged out');
     res.redirect('/users/login');
 });
 
-
+// Profile
+router.get('/profile', ensureAuthenticated, async(req, res) => {
+    try {
+        const curr = await User.findById(req.user.id).lean();
+        console.log(curr.name)
+        res.render('profile', {
+            curr
+        });
+    } catch (err) {
+        console.log(err);
+        res.send("error");
+    }
+})
 
 module.exports = router;

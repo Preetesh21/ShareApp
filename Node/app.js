@@ -4,12 +4,29 @@ const mongoose = require('mongoose');
 const session = require("express-session")
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo')(session)
+const methodOverride = require('method-override');
 const app = new express();
 const passport = require('passport')
 
 // Database
 const db = require('./config/keys').mongouri;
 
+// override with POST having ?_method=PUT
+app.use(methodOverride('_method'))
+
+
+// Method override
+app.use(
+    methodOverride(function(req, res) {
+        if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+            // look in urlencoded POST bodies and delete it
+            //console.log(req.body._method)
+            let method = req.body._method
+            delete req.body._method
+            return method
+        }
+    })
+)
 
 require('./config/passport')(passport)
 
